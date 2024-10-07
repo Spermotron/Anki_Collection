@@ -15,9 +15,13 @@ if [ -z "$LATEST_BACKUP" ]; then
     exit 1
 fi
 
+# Remove all old backup files from the export directory
+echo "Removing old backup files from $EXPORT_DIR"
+rm -f "$EXPORT_DIR"/backup-*.colpkg
+
 # Copy the most recent backup to the export directory
 echo "Copying $LATEST_BACKUP to $EXPORT_DIR"
-cp "$LATEST_BACKUP" "$EXPORT_DIR/Exports"
+cp "$LATEST_BACKUP" "$EXPORT_DIR"
 
 # Navigate to the export directory
 cd "$EXPORT_DIR"
