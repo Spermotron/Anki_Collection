@@ -17,7 +17,7 @@ fi
 
 # Copy the most recent backup to the export directory
 echo "Copying $LATEST_BACKUP to $EXPORT_DIR"
-cp "$LATEST_BACKUP" "$EXPORT_DIR"
+cp "$LATEST_BACKUP" "$EXPORT_DIR/Exports"
 
 # Navigate to the export directory
 cd "$EXPORT_DIR"
