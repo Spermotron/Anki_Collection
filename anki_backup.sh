@@ -4,7 +4,7 @@
 BACKUP_DIR="$HOME/.local/share/Anki2/User 1/backups"
 
 # Set the export directory (your GitHub repository local folder)
-EXPORT_DIR="$HOME/Documents/AnkiExports"
+EXPORT_DIR="$HOME/Documents/Anki_Collection"
 
 # Find the most recent backup file (latest .colpkg file)
 LATEST_BACKUP=$(ls -t "$BACKUP_DIR"/backup-*.colpkg | head -n 1)
