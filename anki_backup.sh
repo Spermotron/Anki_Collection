@@ -1,27 +1,36 @@
 #!/bin/bash
 
-# Set the directory where the Anki collection will be exported
-EXPORT_DIR="/home/YourUsername/Documents/AnkiExports"
+# Set the Anki backups directory path
+BACKUP_DIR="$HOME/.local/share/Anki2/User 1/backups"
 
-# Set the Anki collection file path (modify this if your path is different)
-ANKI_PROFILE_DIR="/home/YourUsername/Anki2/YourProfile"
+# Set the export directory (your GitHub repository local folder)
+EXPORT_DIR="$HOME/Documents/AnkiExports"
 
-# Export the Anki collection (all decks and media)
-echo "Exporting Anki collection to $EXPORT_DIR"
-cp "$ANKI_PROFILE_DIR/collection.anki2" "$EXPORT_DIR/anki_collection_backup.apkg"
+# Find the most recent backup file (latest .colpkg file)
+LATEST_BACKUP=$(ls -t "$BACKUP_DIR"/backup-*.colpkg | head -n 1)
+
+# Check if a backup file was found
+if [ -z "$LATEST_BACKUP" ]; then
+    echo "No backup files found in $BACKUP_DIR."
+    exit 1
+fi
+
+# Copy the most recent backup to the export directory
+echo "Copying $LATEST_BACKUP to $EXPORT_DIR"
+cp "$LATEST_BACKUP" "$EXPORT_DIR"
 
 # Navigate to the export directory
-cd $EXPORT_DIR
+cd "$EXPORT_DIR"
 
-# Add all new or modified files in AnkiExports
+# Add the new backup file to the git staging area
 git add .
 
-# Commit the changes with a message including the date and time
+# Commit the changes with a message including the current date and time
 NOW=$(date +"%Y-%m-%d %T")
-git commit -m "Anki collection backup on $NOW"
+git commit -m "Anki backup upload on $NOW"
 
-# Push the changes to GitHub
+# Push the changes to the GitHub repository
 git push origin main
 
-echo "Backup and GitHub push completed successfully."
+echo "Backup file successfully uploaded to GitHub."
 
